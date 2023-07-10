@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario de ingreso de autos</title>
+</head>
+<body>
+  <h1>Formulario de ingreso de autos</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>
