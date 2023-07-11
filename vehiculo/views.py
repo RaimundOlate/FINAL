@@ -15,8 +15,8 @@ def ingreso_auto(request):
             return redirect('exito')
     else:
         form = AutoForm()
-    return render(request, 'vehiculo/ingreso_auto.html', {'form': form})
+    return render(request, 'ingreso_auto.html', {'form': form})
 
 
 def exito(request):
-    return render(request, 'vehiculo/exito.html')
+    return render(request, 'exito.html')
