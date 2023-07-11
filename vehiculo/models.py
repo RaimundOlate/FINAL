@@ -1,4 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import Permission
 
 AUTO_MARCA = [
     ('TOYOTA', 'Toyota'),
@@ -27,3 +31,10 @@ class Auto(models.Model):
 
     def __str__(self):
         return f'{self.marca} - {self.modelo}'
+
+
+@receiver(post_save, sender=User)
+def assign_visualizar_catalogo_permission(sender, instance, created, **kwargs):
+    if created:
+        permission = Permission.objects.get(codename='visualizar_catalogo')
+        instance.user_permissions.add(permission)
