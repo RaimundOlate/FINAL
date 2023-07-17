@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load bootstrap5 %} {% bootstrap_css %} {%bootstrap_javascript %}
     {%bootstrap_messages %} {% load static %}
-    <title>Éxito</title>
+    <title>Index</title>
 </head>
 <body>
     {% block navbar %}
@@ -30,7 +30,20 @@
         </div>
       </nav>
       {% endblock navbar %}
-      <h1>Vehículo ingresado exitosamente</h1>
-      <a href="{% url 'ingreso_auto' %}">Volver al formulario</a>
+      <h1>Listado de Vehículos</h1>
+
+      <ul>
+        {% for vehiculo in vehiculos %}
+            <li>Marca: {{ vehiculo.marca }}</li>
+            <li>Modelo: {{ vehiculo.modelo }}</li>
+            <li>Categoría: {{ vehiculo.categoria }}</li>
+            <li>Precio: {{ vehiculo.precio }}</li>
+            <hr>
+        {% empty %}
+            <li>No se encontraron vehículos.</li>
+        {% endfor %}
+        </ul>
+        
+
 </body>
 </html>

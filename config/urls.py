@@ -16,9 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from vehiculo import views
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('vehiculo.urls')),
     path('vehiculo/add/', views.ingreso_auto, name='ingreso_auto'),
     path('vehiculo/exito/', views.exito, name='exito'),
+    path('listar_vehiculos/', views.listar_vehiculos, name='listar'),
 ]

@@ -1,8 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+
 
 AUTO_MARCA = [
     ('TOYOTA', 'Toyota'),
@@ -32,9 +33,26 @@ class Auto(models.Model):
     def __str__(self):
         return f'{self.marca} - {self.modelo}'
 
+    def get_condicion_precio(self):
+        if self.precio <= 10000:
+            return "Bajo"
+        elif 10000 < self.precio <= 30000:
+            return "Medio"
+        else:
+            return "Alto"
+
 
 @receiver(post_save, sender=User)
 def assign_visualizar_catalogo_permission(sender, instance, created, **kwargs):
     if created:
         permission = Permission.objects.get(codename='visualizar_catalogo')
+        instance.user_permissions.add(permission)
+
+
+@receiver(post_save, sender=User)
+def assign_add_perm(sender, instance, created, **kwargs):
+    if created:
+        content_type = ContentType.objects.get_for_model(Auto)
+        permission = Permission.objects.get(
+            content_type=content_type, codename='add_auto')
         instance.user_permissions.add(permission)

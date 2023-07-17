@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Auto
 from .forms import AutoForm
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -20,3 +21,8 @@ def ingreso_auto(request):
 
 def exito(request):
     return render(request, 'exito.html')
+
+
+def listar_vehiculos(request):
+    vehiculos = Auto.objects.all()
+    return render(request, 'listar_vehiculos.html', {'vehiculos': vehiculos})
