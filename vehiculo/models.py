@@ -40,19 +40,3 @@ class Auto(models.Model):
             return "Medio"
         else:
             return "Alto"
-
-
-@receiver(post_save, sender=User)
-def assign_visualizar_catalogo_permission(sender, instance, created, **kwargs):
-    if created:
-        permission = Permission.objects.get(codename='visualizar_catalogo')
-        instance.user_permissions.add(permission)
-
-
-@receiver(post_save, sender=User)
-def assign_add_perm(sender, instance, created, **kwargs):
-    if created:
-        content_type = ContentType.objects.get_for_model(Auto)
-        permission = Permission.objects.get(
-            content_type=content_type, codename='add_auto')
-        instance.user_permissions.add(permission)
